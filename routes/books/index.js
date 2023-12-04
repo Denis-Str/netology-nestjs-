@@ -5,12 +5,18 @@ const router = express.Router();
 const fileMulter = require('../../middleware/books/upload');
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-const BookModel = require('../../models/book');
+const { BooksRepository } = require('../../models/book.repository');
+const { Container } = require("inversify");
+const container = new Container();
+
+const BookModel = require('../../models/book.repository');
 
 // список всех книг
 router.get('/api/books', async (req, res) => {
   try {
-    const books = await BookModel.find().sort({ createdAt: -1 });
+    const repo = container.get(BooksRepository);
+    const books = await repo.getBook(await BookModel.find().sort({ createdAt: -1 }));
+    // const books = await BookModel.find().sort({ createdAt: -1 });
     res.render('books/index', { title: 'Books', books });
   } catch (e) {
     console.log(e);
