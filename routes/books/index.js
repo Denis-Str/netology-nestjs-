@@ -88,7 +88,7 @@ router.post('/api/books/delete/:id', async (req, res) => {
   }
 });
 
-// загрузка файла
+// загрузка файла - откл
 router.post('/api/books/:id/upload', fileMulter.single('book'), (req, res) => {
   const { id } = req.params;
   const bookIndex = books.findIndex(({id: bookID}) => bookID === id);
@@ -104,10 +104,10 @@ router.post('/api/books/:id/upload', fileMulter.single('book'), (req, res) => {
   }
 });
 
-// скачивание файла
+// скачивание файла - откл
 router.get('/api/books/:id/download', (req, res) => {
   const { id } = req.params;
-  const book = books.find(({id: bookID}) => bookID === id);
+  const book = BookModel.find(({id: bookID}) => bookID === id);
   if (!book.id) res.status(404).json('404 - книга не найдена');
   res.download(`${book.fileBook}`, `${book.fileName}`, err=> {
     if (err) res.status(503).json(`Ошибка сервера - ${err}`);
