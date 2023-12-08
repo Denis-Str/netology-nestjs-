@@ -88,7 +88,7 @@ router.post('/api/books/delete/:id', async (req: any, res:any) => {
   }
 });
 
-// загрузка файла
+// загрузка файла - откл
 router.post('/api/books/:id/upload', fileMulter.single('book'), (req: any, res:any) => {
   const { id } = req.params;
   const bookIndex = books.findIndex(({id: bookID}) => bookID === id);
@@ -104,7 +104,7 @@ router.post('/api/books/:id/upload', fileMulter.single('book'), (req: any, res:a
   }
 });
 
-// скачивание файла
+// скачивание файла - откл
 router.get('/api/books/:id/download', (req: any, res:any) => {
   const { id } = req.params;
   const book = books.find(({id: bookID}) => bookID === id);
