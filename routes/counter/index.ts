@@ -1,4 +1,4 @@
-const http = require("node:http");
+import http = require("node:http");
 
 const fetchCounter = id => {
   const options = {
@@ -25,7 +25,7 @@ const fetchCounter = id => {
   })
 }
 
-const getCounter = id => {
+const getCounter = (id:string) => {
   http.get(`http://counter:3001/counter/${id}`, async res => {
     const { statusCode } = res;
     if (statusCode !== 200) {
@@ -50,7 +50,4 @@ const getCounter = id => {
     })
 }
 
-module.exports = {
-  fetchCounter,
-  getCounter
-}
+export default { fetchCounter, getCounter };

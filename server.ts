@@ -1,9 +1,9 @@
-const express = require('express');
-const mongoose = require('mongoose');
+import express from 'express';
+import mongoose from 'mongoose';
 const app = express();
 const PORT = process.env.PORT || 3002;
 
-const routes = require('./routes');
+import routes from './routes';
 
 app.use(routes);
 
