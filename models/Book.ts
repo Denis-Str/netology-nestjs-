@@ -1,4 +1,4 @@
-abstract class Book {
+export default abstract class Book {
   // создание книги
   createBook(book:object){
     return book;

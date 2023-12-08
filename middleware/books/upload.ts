@@ -1,16 +1,16 @@
-const multer = require('multer');
+import multer from 'multer';
 
 const storage = multer.diskStorage({
-  destination(req, file, cb){
+  destination(req:any, file:any, cb:any){
     cb(null, 'public/books');
   },
-  filename(req, file, cb) {
+  filename(req:any, file:any, cb:any) {
     cb(null, `${Date.now()}-${file.originalname}`);
   }
 });
 
 const allowedTypes = ['text/plain'];
-const fileFilter = (req, file, cb) => {
+const fileFilter = (req:any, file:any, cb:any) => {
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
@@ -18,4 +18,4 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-module.exports = multer({ storage, fileFilter });
+export default multer({ storage, fileFilter });

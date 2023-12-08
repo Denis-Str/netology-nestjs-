@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express'
 const router = express.Router();
-router.post('/api/user/login', (req, res) => {
+router.post('/api/user/login', (req:any, res:any) => {
   const data = {id: 1, mail: "test@mail.ru"};
   res.status(201);
   res.json(data);
 });
 
-module.exports = router;
+export default router;

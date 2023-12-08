@@ -1,14 +1,14 @@
-const express = require('express');
+import express from 'express';
 const axios = require('axios').default;
-const bodyParser = require('body-parser');
+import bodyParser from 'body-parser';
 const router = express.Router();
-const fileMulter = require('../../middleware/books/upload');
+import fileMulter = require('../../middleware/books/upload');
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-const BookModel = require('../../models/book');
+import BookModel from '../../models/bookSchema';
 
 // список всех книг
-router.get('/api/books', async (req, res) => {
+router.get('/api/books', async (req: any, res:any) => {
   try {
     const books = await BookModel.find().sort({ createdAt: -1 });
     res.render('books/index', { title: 'Books', books });
@@ -18,7 +18,7 @@ router.get('/api/books', async (req, res) => {
 });
 
 // создание книги
-router.post('/api/books/create', urlencodedParser, async (req, res) => {
+router.post('/api/books/create', urlencodedParser, async (req: any, res:any) => {
   const book = req.body
   const newBook = new BookModel(book);
   await newBook.save();
@@ -27,12 +27,12 @@ router.post('/api/books/create', urlencodedParser, async (req, res) => {
 })
 
 // форма создания книги
-router.get('/api/books/create', (req, res) => {
+router.get('/api/books/create', (req: any, res:any) => {
   res.render('books/create', { title: 'Create', book: {} });
 })
 
 // получение книги
-router.get('/api/books/detailed/:id', urlencodedParser, async (req, res) => {
+router.get('/api/books/detailed/:id', urlencodedParser, async (req: any, res:any) => {
   const { id } = req.params;
 
   if (id) {
@@ -46,7 +46,7 @@ router.get('/api/books/detailed/:id', urlencodedParser, async (req, res) => {
   }
 });
 
-router.get('/api/books/update/:id', async (req, res) => {
+router.get('/api/books/update/:id', async (req: any, res:any) => {
   const { id } = req.params;
 
   if (id) {
@@ -59,7 +59,7 @@ router.get('/api/books/update/:id', async (req, res) => {
   }
 })
 // редактирование книги
-router.post('/api/books/update/:id', urlencodedParser, async (req, res) => {
+router.post('/api/books/update/:id', urlencodedParser, async (req: any, res:any) => {
   const { id } = req.params;
 
   if (id) {
@@ -75,7 +75,7 @@ router.post('/api/books/update/:id', urlencodedParser, async (req, res) => {
 });
 
 // удаление книги
-router.post('/api/books/delete/:id', async (req, res) => {
+router.post('/api/books/delete/:id', async (req: any, res:any) => {
   const { id } = req.params;
 
   if (id) {
@@ -89,7 +89,7 @@ router.post('/api/books/delete/:id', async (req, res) => {
 });
 
 // загрузка файла
-router.post('/api/books/:id/upload', fileMulter.single('book'), (req, res) => {
+router.post('/api/books/:id/upload', fileMulter.single('book'), (req: any, res:any) => {
   const { id } = req.params;
   const bookIndex = books.findIndex(({id: bookID}) => bookID === id);
 
@@ -105,7 +105,7 @@ router.post('/api/books/:id/upload', fileMulter.single('book'), (req, res) => {
 });
 
 // скачивание файла
-router.get('/api/books/:id/download', (req, res) => {
+router.get('/api/books/:id/download', (req: any, res:any) => {
   const { id } = req.params;
   const book = books.find(({id: bookID}) => bookID === id);
   if (!book.id) res.status(404).json('404 - книга не найдена');
@@ -114,4 +114,4 @@ router.get('/api/books/:id/download', (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;
